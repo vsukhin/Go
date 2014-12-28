@@ -15,7 +15,7 @@ import (
 type MyForm struct {
 	UserName     string        `required:"true" field:"name" name:"Имя пользователя" type:"text"`
 	UserPassword string        `required:"true" field:"password" name:"Пароль пользователя" type:"password"`
-	Customer     string        `required:"false" field:"customer" name:"Имя и Фамилия" type:"textarea" default="false"`
+	Customer     string        `required:"false" field:"customer" name:"Имя и Фамилия" type:"textarea" default:"false"`
 	Resident     bool          `field:"resident" type:"radio" radio:"1;checked" name:"Резидент РФ"`
 	NoResident   bool          `field:"resident" type:"radio" radio:"2" name:"Нерезидент РФ"`
 	Gender       string        `field:"gender" name:"Пол" type:"select" select:"Неизвестный=3;selected,Мужской=1,Женский=2"`
@@ -275,10 +275,10 @@ func FormCreate(formData *MyForm) (form string, err error) {
 				return "", fmt.Errorf("Wrong structure select value", fieldSelect)
 			}
 			inputTag += ">"
-			for _, v := range values {
-				options := strings.Split(v, ";")
+			for _, element := range values {
+				options := strings.Split(element, ";")
 				if len(options) < 1 || len(options) > 2 {
-					return "", fmt.Errorf("Wrong structure option value", v)
+					return "", fmt.Errorf("Wrong structure option value", element)
 				}
 
 				items := strings.Split(options[0], "=")
